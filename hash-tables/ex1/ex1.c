@@ -8,6 +8,29 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   HashTable *ht = create_hash_table(16);
 
   // YOUR CODE HERE
+  for (int i = 0; i < length; i++)
+  {
+    hash_table_insert(ht, weights[i], i);
+  }
+  for (int i = 0; i < length; i++)
+  {
+    int complement_index = hash_table_retrieve(ht, limit - weights[i]);
+    if (complement_index >= 0)
+    {
+      Answer *a = malloc(sizeof(Answer));
+      if (complement_index >= i)
+      {
+        a->index_1 = complement_index;
+        a->index_2 = i;
+      }
+      else
+      {
+        a->index_1 = i;
+        a->index_2 = complement_index;
+      }
+      return a;
+    }
+  }
 
   return NULL;
 }
